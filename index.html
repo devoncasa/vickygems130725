@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vicky Amber & Gems | Authentic Burmese Amber & Timeless Knowledge</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+      /* Embedded Google Fonts to fix CORS issue with html-to-image */
+      /* latin-ext */
+      @font-face {
+        font-family: 'Cormorant Garamond';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/cormorantgaramond/v16/co3bmX5slCNuHLi8bLeY9MK7whWMhyjQpHUYvvQ-aZX-.woff2) format('woff2');
+        unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+      }
+      /* latin */
+      @font-face {
+        font-family: 'Cormorant Garamond';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/cormorantgaramond/v16/co3bmX5slCNuHLi8bLeY9MK7whWMhyjQpHQYvvQ-aQ.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      /* latin-ext */
+      @font-face {
+        font-family: 'Cormorant Garamond';
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/cormorantgaramond/v16/co3emX5slCNuHLi8bLeY9MK7whWMhika5lscvvk-aZX-.woff2) format('woff2');
+        unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+      }
+      /* latin */
+      @font-face {
+        font-family: 'Cormorant Garamond';
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/cormorantgaramond/v16/co3emX5slCNuHLi8bLeY9MK7whWMhika5l4cvvk-aQ.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      /* latin-ext */
+      @font-face {
+        font-family: 'Cormorant Garamond';
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/cormorantgaramond/v16/co3emX5slCNuHLi8bLeY9MK7whWMhibq4Vscvvk-aZX-.woff2) format('woff2');
+        unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+      }
+      /* latin */
+      @font-face {
+        font-family: 'Cormorant Garamond';
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/cormorantgaramond/v16/co3emX5slCNuHLi8bLeY9MK7whWMhibq4V4cvvk-aQ.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      /* latin-ext */
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7.woff2) format('woff2');
+        unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+      }
+      /* latin */
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2ZL7.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      /* latin-ext */
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7.woff2) format('woff2');
+        unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+      }
+      /* latin */
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2ZL7.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      /* latin-ext */
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7.woff2) format('woff2');
+        unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+      }
+      /* latin */
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2ZL7.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      /* thai */
+      @font-face {
+        font-family: 'Noto Sans Thai';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/notosansthai/v21/iJWnBXeMa_wFVajdMoA8hApTeJ9-4f52c3Q.woff2) format('woff2');
+        unicode-range: U+0E01-0E5B, U+200C-200D, U+25CC;
+      }
+      /* latin-ext */
+      @font-face {
+        font-family: 'Noto Sans Thai';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/notosansthai/v21/iJWnBXeMa_wFVajdMoA8hApTeJ9-4f_2c3Q.woff2) format('woff2');
+        unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+      }
+      /* latin */
+      @font-face {
+        font-family: 'Noto Sans Thai';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/notosansthai/v21/iJWnBXeMa_wFVajdMoA8hApTeJ9-4f32.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      /* thai */
+      @font-face {
+        font-family: 'Noto Sans Thai';
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/notosansthai/v21/iJWnBXeMa_wFVajdMoA8hApTeJ9-4f52c3Q.woff2) format('woff2');
+        unicode-range: U+0E01-0E5B, U+200C-200D, U+25CC;
+      }
+      /* latin-ext */
+      @font-face {
+        font-family: 'Noto Sans Thai';
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/notosansthai/v21/iJWnBXeMa_wFVajdMoA8hApTeJ9-4f_2c3Q.woff2) format('woff2');
+        unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+      }
+      /* latin */
+      @font-face {
+        font-family: 'Noto Sans Thai';
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/notosansthai/v21/iJWnBXeMa_wFVajdMoA8hApTeJ9-4f32.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      /* thai */
+      @font-face {
+        font-family: 'Noto Sans Thai';
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/notosansthai/v21/iJWnBXeMa_wFVajdMoA8hApTeJ9-4f52c3Q.woff2) format('woff2');
+        unicode-range: U+0E01-0E5B, U+200C-200D, U+25CC;
+      }
+      /* latin-ext */
+      @font-face {
+        font-family: 'Noto Sans Thai';
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/notosansthai/v21/iJWnBXeMa_wFVajdMoA8hApTeJ9-4f_2c3Q.woff2) format('woff2');
+        unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+      }
+      /* latin */
+      @font-face {
+        font-family: 'Noto Sans Thai';
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/notosansthai/v21/iJWnBXeMa_wFVajdMoA8hApTeJ9-4f32.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      /* chinese */
+      @font-face {
+        font-family: 'Noto Sans SC';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/notosanssc/v35/k3kJo84MPvpLmixcA63oeALZTYKL24i_lQ.woff2) format('woff2');
+        unicode-range: U+2E80-2EFF, U+3000-303F, U+3200-32FF, U+3300-33FF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F;
+      }
+      @font-face {
+        font-family: 'Noto Sans SC';
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/notosanssc/v35/k3kJo84MPvpLmixcA63oeALZTYKL24i_lQ.woff2) format('woff2');
+        unicode-range: U+2E80-2EFF, U+3000-303F, U+3200-32FF, U+3300-33FF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F;
+      }
+      /* urdu */
+      @font-face {
+        font-family: 'Noto Nastaliq Urdu';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/notonastaliqurdu/v20/La2c_D_FCc_d25oV1j3e29zbE50Z1wkeS_w.woff2) format('woff2');
+        unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
+      }
+      @font-face {
+        font-family: 'Noto Nastaliq Urdu';
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/notonastaliqurdu/v20/La2c_D_FCc_d25oV1j3e29zbE50Z1wkeS_w.woff2) format('woff2');
+        unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
+      }
+    </style>
+    <style>
+      :root {
+        /* New Pastel Earth Tones Palette */
+        --c-bg: #F8F5F2; /* Soft Sand */
+        --c-surface: #FFFFFF;
+        --c-surface-alt: #F0EBE6; /* Muted Sand */
+        --c-text-primary: #534B42; /* Deep Taupe */
+        --c-text-secondary: #7E746A; /* Muted Taupe */
+        --c-heading: #3D352E; /* Dark Chocolate */
+        
+        /* Updated for WCAG AA contrast on white text */
+        --c-accent-primary: #A56C50; /* Darker Warm Clay */
+        --c-accent-primary-hover: #8D5B45; /* Darker Clay Hover */
+        --c-accent-secondary: #9FB8AD; /* Muted Sage */
+        --c-accent-secondary-hover: #8DA89A;
+        
+        --c-border: #E5E0DA;
+        --c-footer-bg: #F0EBE6;
+        --c-footer-text: #7E746A;
+        
+        /* Deprecated variables for compatibility, will be removed over time */
+        --background-color: var(--c-bg);
+        --text-color: var(--c-text-primary);
+        --heading-color: var(--c-heading);
+        --accent-primary: var(--c-accent-primary);
+        --accent-primary-dark: var(--c-accent-primary-hover);
+        --accent-secondary: var(--c-accent-secondary);
+        --footer-bg: var(--c-footer-bg);
+        --footer-text: var(--c-footer-text);
+        
+        /* Bracelet Builder Colors (integrated into main theme) */
+        --c-builder-bg: var(--c-surface-alt);
+        --c-builder-section-bg: var(--c-surface);
+        --c-builder-text: var(--c-text-primary);
+        --c-builder-heading: var(--c-heading);
+        --c-builder-accent: var(--c-builder-accent);
+        --c-builder-accent-hover: var(--c-builder-accent-hover);
+        --c-builder-separator: var(--c-border);
+      }
+
+      /* Base Typography & Colors */
+      body {
+        background-color: var(--c-bg);
+        color: var(--c-text-primary);
+        font-family: 'Inter', sans-serif;
+      }
+      
+      html[lang="th"] body { font-family: 'Noto Sans Thai', 'Inter', sans-serif; }
+      html[lang="zh"] body { font-family: 'Noto Sans SC', 'Inter', sans-serif; }
+      html[lang="ur"] body { font-family: 'Noto Nastaliq Urdu', 'Inter', sans-serif; }
+
+      h1, h2, h3, h4, h5, h6 {
+        font-family: 'Cormorant Garamond', serif;
+        color: var(--c-heading);
+        letter-spacing: 0.025em;
+        font-weight: 600;
+      }
+      
+      html[lang="th"] h1, html[lang="th"] h2, html[lang="th"] h3, html[lang="th"] h4, html[lang="th"] h5, html[lang="th"] h6 {
+          font-family: 'Cormorant Garamond', 'Noto Sans Thai', serif;
+      }
+      html[lang="zh"] h1, html[lang="zh"] h2, html[lang="zh"] h3, html[lang="zh"] h4, html[lang="zh"] h5, html[lang="zh"] h6 {
+          font-family: 'Cormorant Garamond', 'Noto Sans SC', serif;
+      }
+       html[lang="ur"] h1, html[lang="ur"] h2, html[lang="ur"] h3, html[lang="ur"] h4, html[lang="ur"] h5, html[lang="ur"] h6 {
+          font-family: 'Cormorant Garamond', 'Noto Nastaliq Urdu', serif;
+      }
+
+      /* Styles for Page Backgrounds */
+      .page-container-with-bg {
+          background-size: cover;
+          background-position: center;
+          position: relative;
+          isolation: isolate;
+      }
+      .page-container-with-bg::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(145deg, hsla(30, 27%, 96%, 0.80) 0%, hsla(30, 20%, 93%, 0.85) 100%);
+          z-index: -1;
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--c-surface-alt);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--c-accent-secondary);
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--c-accent-secondary-hover);
+      }
+
+      /* Custom Button Styles */
+      .btn-primary {
+        background-color: var(--c-accent-primary);
+        color: white;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px 0 rgba(165, 108, 80, 0.2);
+      }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        background-color: var(--c-accent-primary-hover);
+        box-shadow: 0 6px 20px 0 rgba(141, 91, 69, 0.3);
+      }
+      /* Deprecated */
+      .btn-gold {
+        background-color: var(--c-accent-primary);
+        color: white;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px 0 rgba(165, 108, 80, 0.2);
+      }
+      .btn-gold:hover {
+        transform: translateY(-2px);
+        background-color: var(--c-accent-primary-hover);
+        box-shadow: 0 6px 20px 0 rgba(141, 91, 69, 0.3);
+      }
+    </style>
+    <style>
+      /* Bead styles for Bracelet Builder PREVIEW */
+      .bead-crystal, .bead-wax, .bead-wood {
+        background-size: cover;
+        background-position: center;
+        position: relative;
+      }
+
+      /* Glossy effect for crystal beads */
+      .bead-crystal::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.6), transparent 45%);
+        transform: rotate(15deg);
+        border-radius: 50%;
+      }
+      
+      /* Waxy, semi-transparent effect for Mila */
+      .bead-wax::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at 50% 40%, rgba(255, 251, 235, 0.3), transparent 70%);
+        box-shadow: inset 0 2px 8px rgba(0,0,0,0.15);
+        border-radius: 50%;
+      }
+      
+      /* Opaque, wood-like effect for Root */
+      .bead-wood::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);
+        border-radius: 50%;
+      }
+
+      /* Styles for the new Bracelet Builder Color Pickers */
+       .bead-picker {
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05), inset 0 1px 2px rgba(255,255,255,0.3);
+        background-size: cover;
+        background-position: center;
+      }
+      .bead-picker:hover {
+        transform: scale(1.1);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1), inset 0 1px 2px rgba(255,255,255,0.3);
+      }
+      .bead-picker.selected {
+        transform: scale(1.1);
+        border: 3px solid var(--c-accent-primary);
+        box-shadow: 0 4px 10px rgba(165, 108, 80, 0.4);
+      }
+
+      /* RTL Support */
+      [dir="rtl"] .group:hover .group-hover\:visible {
+        visibility: visible;
+      }
+      [dir="rtl"] .space-x-2 > :not([hidden]) ~ :not([hidden]) {
+        --tw-space-x-reverse: 1;
+      }
+      [dir="rtl"] .space-x-4 > :not([hidden]) ~ :not([hidden]) {
+        --tw-space-x-reverse: 1;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.1.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
+    "react/": "https://esm.sh/react@^19.1.0/",
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.6.3",
+    "@heroicons/react/": "https://esm.sh/@heroicons/react@^2.2.0/",
+    "html-to-image": "https://esm.sh/html-to-image@^1.11.11",
+    "@google/genai": "https://esm.sh/@google/genai"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="antialiased">
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
