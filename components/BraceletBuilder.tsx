@@ -18,7 +18,7 @@ const BraceletBuilder: React.FC = () => {
     ]);
     const [selectedPatternIndex, setSelectedPatternIndex] = useState<number | null>(null);
     const [isProcessing, setIsProcessing] = useState(false);
-    const builderRef = useRef<HTMLDivElement>(null);
+    const captureAreaRef = useRef<HTMLDivElement>(null);
     
     // --- Calculations ---
     const { finalBeads, summary } = useMemo(() => {
@@ -62,6 +62,29 @@ const BraceletBuilder: React.FC = () => {
             summary: { totalPrice, totalWeight, totalLength: currentLength_mm, beadCount: calculatedBeads.length }
         };
     }, [wristSize, pattern]);
+    
+    const beadComposition = useMemo(() => {
+        if (!summary.beadCount) return [];
+        
+        const compositionMap = new Map<string, { count: number; colorName: string; size: number }>();
+        
+        finalBeads.forEach(bead => {
+            const key = `${bead.colorId}-${bead.size}`;
+            const color = AMBER_COLOR_DETAILS.find(c => c.id === bead.colorId);
+            
+            if (compositionMap.has(key)) {
+                compositionMap.get(key)!.count++;
+            } else {
+                compositionMap.set(key, {
+                    count: 1,
+                    colorName: color?.name || 'Unknown',
+                    size: bead.size
+                });
+            }
+        });
+        
+        return Array.from(compositionMap.values());
+    }, [finalBeads, summary.beadCount]);
 
     const displayRadius = useMemo(() => {
         if (finalBeads.length < 2) return 0;
@@ -93,14 +116,11 @@ const BraceletBuilder: React.FC = () => {
     };
 
     const handleAutoDesign = () => {
-        // Define color tiers, excluding the most common/lowest value to prioritize style
         const highValueColors = AMBER_COLOR_DETAILS.filter(c => c.basePricePerGram >= 1000).map(c => c.id);
         const mediumValueColors = AMBER_COLOR_DETAILS.filter(c => c.basePricePerGram >= 300 && c.basePricePerGram < 1000).map(c => c.id);
         
-        // Ensure there are colors to choose from
         if (highValueColors.length === 0 || mediumValueColors.length === 0) {
             console.error("Not enough color variety for auto-design.");
-            // Fallback to a simple, safe pattern
             setPattern([
                 { id: `fallback-0-${Date.now()}`, colorId: 'root', size: 10 },
                 { id: `fallback-1-${Date.now()}`, colorId: 'golden', size: 12 },
@@ -109,20 +129,15 @@ const BraceletBuilder: React.FC = () => {
             return;
         }
 
-        // --- New Generation Logic for "Unlimited Differences" ---
-
-        // 1. Choose a random generation strategy for variety
         const strategies = ['FocalPoint', 'Rhythmic', 'Alternating'];
         const chosenStrategy = strategies[Math.floor(Math.random() * strategies.length)];
 
         let newPattern: BeadConfig[] = [];
-        const patternLength = Math.random() > 0.5 ? 5 : 3; // Use patterns of 3 or 5
+        const patternLength = Math.random() > 0.5 ? 5 : 3;
 
-        // 2. Select a palette of colors and sizes based on the strategy
         const focalColor = highValueColors[Math.floor(Math.random() * highValueColors.length)];
         const baseColor1 = mediumValueColors[Math.floor(Math.random() * mediumValueColors.length)];
         let baseColor2 = mediumValueColors[Math.floor(Math.random() * mediumValueColors.length)];
-        // Ensure baseColor2 is different from baseColor1 if possible
         if (mediumValueColors.length > 1) {
             while (baseColor2 === baseColor1) {
                 baseColor2 = mediumValueColors[Math.floor(Math.random() * mediumValueColors.length)];
@@ -135,9 +150,8 @@ const BraceletBuilder: React.FC = () => {
         const focalSize = largeSizes[Math.floor(Math.random() * largeSizes.length)];
         const baseSize = mediumSizes[Math.floor(Math.random() * mediumSizes.length)];
 
-        // 3. Build the pattern based on the chosen strategy
         switch (chosenStrategy) {
-            case 'FocalPoint': // e.g., A-B-A or A-B-C-B-A
+            case 'FocalPoint':
                 if (patternLength === 3) { // A-B-A
                     newPattern = [
                         { id: `auto-0-${Date.now()}`, colorId: baseColor1, size: baseSize },
@@ -155,8 +169,8 @@ const BraceletBuilder: React.FC = () => {
                 }
                 break;
             
-            case 'Rhythmic': // e.g., A-A-B-A-A
-                 if (patternLength === 3) { // A-B-A for simplicity
+            case 'Rhythmic':
+                 if (patternLength === 3) {
                     newPattern = [
                         { id: `auto-0-${Date.now()}`, colorId: baseColor1, size: baseSize },
                         { id: `auto-1-${Date.now()}`, colorId: focalColor, size: focalSize },
@@ -173,15 +187,15 @@ const BraceletBuilder: React.FC = () => {
                  }
                 break;
             
-            case 'Alternating': // e.g., A-B-A-B-A
+            case 'Alternating':
             default:
-                if (patternLength === 3) { // A-B-A
+                if (patternLength === 3) {
                      newPattern = [
                         { id: `auto-0-${Date.now()}`, colorId: baseColor1, size: baseSize },
                         { id: `auto-1-${Date.now()}`, colorId: baseColor2, size: focalSize },
                         { id: `auto-2-${Date.now()}`, colorId: baseColor1, size: baseSize },
                     ];
-                } else { // A-B-A-B-A
+                } else {
                     for (let i = 0; i < patternLength; i++) {
                         const color = i % 2 === 0 ? baseColor1 : baseColor2;
                         const size = i % 2 === 0 ? baseSize : focalSize;
@@ -190,16 +204,19 @@ const BraceletBuilder: React.FC = () => {
                 }
                 break;
         }
-
         setPattern(newPattern);
     };
     
-    const handlePlacePreOrder = async () => {
-        if (!builderRef.current || finalBeads.length <= 0 || isProcessing) return;
+    const handleAction = async (action: 'capture' | 'submit') => {
+        if (!captureAreaRef.current || finalBeads.length <= 0 || isProcessing) return;
         setIsProcessing(true);
+
+        const designCode = `VAG-CUSTOM-${Date.now()}`;
+        const filename = `${designCode}.png`;
         const watermarkOverlay = document.createElement('div');
+
         try {
-            if (builderRef.current) {
+            if (action === 'submit' && captureAreaRef.current) {
                 watermarkOverlay.style.position = 'absolute';
                 watermarkOverlay.style.inset = '0';
                 watermarkOverlay.style.zIndex = '1000';
@@ -215,63 +232,56 @@ const BraceletBuilder: React.FC = () => {
                     content += `<span style="color: rgba(83, 75, 66, 0.08); font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; transform: rotate(-30deg); padding: 30px 50px; white-space: nowrap; user-select: none;">${watermarkText}</span>`;
                 }
                 watermarkOverlay.innerHTML = content;
-                builderRef.current.style.position = 'relative';
-                builderRef.current.appendChild(watermarkOverlay);
+                captureAreaRef.current.style.position = 'relative';
+                captureAreaRef.current.appendChild(watermarkOverlay);
             }
-
-            const designCode = `VAG-CUSTOM-${Date.now()}`;
-            const beadSummary = finalBeads.reduce((acc, bead) => {
-                const colorName = AMBER_COLOR_DETAILS.find(c => c.id === bead.colorId)?.name || 'Unknown Color';
-                const key = `${colorName} (${bead.size.toFixed(2)}mm)`;
-                acc.set(key, (acc.get(key) || 0) + 1);
-                return acc;
-            }, new Map<string, number>());
             
-            let summaryString = '';
-            for (const [beadDesc, count] of beadSummary.entries()) {
-                summaryString += `- ${count}x ${beadDesc}\n`;
-            }
+            const dataUrl = await toPng(captureAreaRef.current, { backgroundColor: '#F8F5F2', pixelRatio: 2 });
 
-            const textSummary = `New Custom Bracelet Pre-Order Inquiry
----------------------------------
-Design Code: ${designCode}
----------------------------------
-SPECIFICATIONS:
-- Target Wrist Size: ${wristSize.toFixed(1)} cm
-- Pattern Definition: ${pattern.map(p => `${AMBER_COLOR_DETAILS.find(c=>c.id === p.colorId)?.name} (${p.size}mm)`).join(', ')}
-
-FINAL BRACELET DETAILS:
-- Total Beads: ${summary.beadCount}
-- Final Length: ${(summary.totalLength / 10).toFixed(1)} cm
-- Bead Composition:
-${summaryString}
----------------------------------
-SUMMARY:
-- Est. Total Weight: ${summary.totalWeight.toFixed(2)} g
-- Est. Total Price: ${formatCurrency(summary.totalPrice)}
----------------------------------
-Please confirm availability and payment details. Thank you!
-`.trim().replace(/^\s+/gm, '');
-
-            const dataUrl = await toPng(builderRef.current, { backgroundColor: '#F8F5F2', pixelRatio: 2 });
             const link = document.createElement('a');
-            link.download = `${designCode}.png`;
+            link.download = filename;
             link.href = dataUrl;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
             
-            await navigator.clipboard.writeText(textSummary);
-            alert("Your bracelet image has been downloaded and order details are copied to your clipboard.\n\nA new window will open to our Facebook chat. Please paste the details and upload the image there to finalize your pre-order with our team.");
-            window.open('https://www.facebook.com/messages/t/VKMMAmber', '_blank', 'noopener,noreferrer');
+            if (action === 'submit') {
+                let summaryString = '';
+                for (const bead of beadComposition) {
+                    summaryString += `- ${bead.count}x ${bead.colorName} (${bead.size.toFixed(2)}mm)\n`;
+                }
+                
+                const textSummary = `New Custom Bracelet Pre-Order Inquiry
+---------------------------------
+Design Code: ${designCode}
+---------------------------------
+SPECIFICATIONS:
+- Target Wrist Size: ${wristSize.toFixed(1)} cm
+- Final Length: ${(summary.totalLength / 10).toFixed(1)} cm
+- Total Beads: ${summary.beadCount}
+- Est. Total Weight: ${summary.totalWeight.toFixed(2)} g
+- Est. Total Price: ${formatCurrency(summary.totalPrice)}
+
+BEAD COMPOSITION:
+${summaryString}
+---------------------------------
+Please confirm availability and payment details. Thank you!
+`.trim().replace(/^\s+/gm, '');
+
+                await navigator.clipboard.writeText(textSummary);
+                alert("Your bracelet image has been downloaded and order details are copied to your clipboard.\n\nA new window will open to our Facebook chat. Please paste the details and upload the image there to finalize your pre-order with our team.");
+                window.open('https://www.facebook.com/messages/t/VKMMAmber', '_blank', 'noopener,noreferrer');
+            } else {
+                 alert('Design image saved to your downloads!');
+            }
 
         } catch (err) {
-            console.error('Failed to process pre-order:', err);
-            alert('An error occurred while preparing your pre-order. Please try again or contact us directly.');
+            console.error('Failed to process action:', err);
+            alert('An error occurred. Please try again or contact us directly.');
         } finally {
-            if (builderRef.current && builderRef.current.contains(watermarkOverlay)) {
-                builderRef.current.removeChild(watermarkOverlay);
-                builderRef.current.style.position = '';
+             if (action === 'submit' && captureAreaRef.current && captureAreaRef.current.contains(watermarkOverlay)) {
+                captureAreaRef.current.removeChild(watermarkOverlay);
+                captureAreaRef.current.style.position = '';
             }
             setIsProcessing(false);
         }
@@ -320,7 +330,7 @@ Please confirm availability and payment details. Thank you!
     };
 
     return (
-        <div ref={builderRef} className="space-y-8" style={{ color: 'var(--c-builder-text)' }}>
+        <div className="space-y-8" style={{ color: 'var(--c-builder-text)' }}>
             
             <BeadCustomizationModal
                 isOpen={selectedPatternIndex !== null}
@@ -365,11 +375,11 @@ Please confirm availability and payment details. Thank you!
                         )
                     })}
                 </div>
-                <div className="flex items-center gap-4 mt-4">
-                    <button onClick={handleAddBeadToPattern} className="btn-primary flex-1 py-2 rounded-md">Add Bead to Pattern</button>
-                    <button onClick={handleRemoveBeadFromPattern} className="bg-stone-200 text-stone-700 flex-1 py-2 rounded-md hover:bg-stone-300 transition-colors disabled:opacity-50" disabled={pattern.length <= 1}>Remove Last Bead</button>
-                </div>
-                <div className="mt-4 text-center">
+                 <div className="mt-4 text-center space-y-3">
+                     <div className="flex items-center gap-4">
+                        <button onClick={handleAddBeadToPattern} className="btn-primary flex-1 py-2 rounded-md">Add Bead to Pattern</button>
+                        <button onClick={handleRemoveBeadFromPattern} className="bg-stone-200 text-stone-700 flex-1 py-2 rounded-md hover:bg-stone-300 transition-colors disabled:opacity-50" disabled={pattern.length <= 1}>Remove Last Bead</button>
+                    </div>
                     <button onClick={handleAutoDesign} className="px-6 py-2 rounded-lg bg-[var(--c-accent-secondary)] text-white font-semibold hover:bg-[var(--c-accent-secondary-hover)] transition-colors shadow-sm">
                         ✨ Auto-Design Amber Style
                     </button>
@@ -380,40 +390,58 @@ Please confirm availability and payment details. Thank you!
             <div className="bg-[var(--c-builder-bg)] p-6 rounded-lg shadow-inner border border-[var(--c-builder-separator)] sticky top-24 z-10">
                 <h3 className="font-semibold text-lg text-center text-[var(--c-builder-heading)]">3. Bracelet Preview & Summary</h3>
                 <p className="text-sm opacity-70 mb-4 text-center">This is the final bracelet based on your wrist size and pattern.</p>
-
-                <div className="bg-white/50 p-4 my-4 rounded-lg min-h-[36rem] flex items-center justify-center border border-[var(--c-builder-separator)] overflow-hidden">
-                    <div className="relative w-[32rem] h-[32rem]">
-                        {finalBeads.length > 0 ? renderBraceletPreview() : (
-                            <div className="text-center text-stone-500">
-                                <p>Adjust wrist size and pattern to see a preview.</p>
+                
+                <div ref={captureAreaRef} className="bg-[var(--c-bg)] p-4 my-4 rounded-lg border border-[var(--c-builder-separator)]">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
+                        <div className="lg:col-span-2 aspect-square relative flex items-center justify-center mx-auto w-2/3 lg:w-full">
+                            <div className="w-full h-full relative">
+                                {finalBeads.length > 0 ? renderBraceletPreview() : (
+                                    <div className="absolute inset-0 flex items-center justify-center text-center text-stone-500">
+                                        <p>Adjust wrist size and pattern to see a preview.</p>
+                                    </div>
+                                )}
                             </div>
-                        )}
-                    </div>
-                </div>
-                <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-center">
-                    <div className="bg-white p-3 rounded-lg border border-[var(--c-builder-separator)]">
-                        <p className="text-sm font-semibold text-stone-600">Total Beads</p>
-                        <p className="text-xl font-bold text-[var(--c-builder-heading)]">{summary.beadCount}</p>
-                    </div>
-                     <div className="bg-white p-3 rounded-lg border border-[var(--c-builder-separator)]">
-                        <p className="text-sm font-semibold text-stone-600">Final Length</p>
-                        <p className="text-xl font-bold text-[var(--c-builder-heading)]">{(summary.totalLength / 10).toFixed(1)} cm</p>
-                    </div>
-                    <div className="bg-white p-3 rounded-lg border border-[var(--c-builder-separator)]">
-                        <p className="text-sm font-semibold text-stone-600">Est. Weight</p>
-                        <p className="text-xl font-bold text-[var(--c-builder-heading)]">{summary.totalWeight.toFixed(2)} g</p>
-                    </div>
-                    <div className="bg-[var(--c-builder-accent)]/20 p-3 rounded-lg border border-[var(--c-builder-accent)]/50">
-                        <p className="text-sm font-semibold text-[var(--c-builder-accent)]">Est. Price</p>
-                        <p className="text-xl font-bold text-[var(--c-builder-heading)]">{formatCurrency(summary.totalPrice)}</p>
+                        </div>
+                        <div className="lg:col-span-1 p-4 bg-[var(--c-surface)] rounded-lg border border-[var(--c-builder-separator)] h-full self-stretch flex flex-col">
+                            <h4 className="text-lg font-bold mb-3 text-center text-[var(--c-heading)]">Design Specifications</h4>
+                             {finalBeads.length > 0 ? (
+                                <>
+                                    <div className="space-y-2 text-sm flex-grow">
+                                        <div className="flex justify-between"><span>Wrist Size:</span> <strong className="text-[var(--c-accent-primary)]">{wristSize.toFixed(1)} cm</strong></div>
+                                        <div className="flex justify-between"><span>Total Beads:</span> <strong>{summary.beadCount}</strong></div>
+                                        <div className="flex justify-between"><span>Est. Weight:</span> <strong>{summary.totalWeight.toFixed(2)} g</strong></div>
+                                        <div className="mt-2 pt-2 border-t">
+                                            <p className="font-semibold mb-1">Bead Composition:</p>
+                                            <ul className="space-y-1 text-xs max-h-40 overflow-y-auto pr-2">
+                                                {beadComposition.map(bead => (
+                                                    <li key={`${bead.colorName}-${bead.size}`} className="flex justify-between items-center">
+                                                        <span>{bead.colorName} ({bead.size.toFixed(2)}mm)</span>
+                                                        <strong>x {bead.count}</strong>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div className="mt-4 pt-3 border-t-2 border-dashed">
+                                        <div className="flex justify-between items-baseline">
+                                            <span className="font-semibold text-base">Estimated Price:</span>
+                                            <strong className="text-2xl font-bold text-[var(--c-heading)]">{formatCurrency(summary.totalPrice)}</strong>
+                                        </div>
+                                    </div>
+                                </>
+                             ) : <p className="text-center text-sm text-stone-500 flex-grow flex items-center justify-center">Details will appear here.</p>}
+                        </div>
                     </div>
                 </div>
             </div>
 
              {/* --- Actions --- */}
-            <div className="mt-8">
-                <button onClick={handlePlacePreOrder} className="w-full btn-gold text-white font-bold py-4 px-6 rounded-lg text-lg shadow-lg disabled:bg-stone-400 disabled:cursor-not-allowed" disabled={finalBeads.length <= 0 || isProcessing}>
-                    {isProcessing ? 'Processing...' : (finalBeads.length > 0 ? "Finalize & Pre-Order This Design" : "Please complete your design")}
+            <div className="mt-8 space-y-3">
+                <button onClick={() => handleAction('capture')} className="w-full bg-[var(--c-accent-secondary)] text-white font-bold py-3 px-6 rounded-lg text-lg shadow-lg disabled:bg-stone-400/80 disabled:cursor-not-allowed transition-all" disabled={finalBeads.length <= 0 || isProcessing}>
+                    {isProcessing ? 'Processing...' : "Capture Design"}
+                </button>
+                 <button onClick={() => handleAction('submit')} className="w-full btn-primary text-white font-bold py-4 px-6 rounded-lg text-lg shadow-lg disabled:bg-stone-400 disabled:cursor-not-allowed transition-all" disabled={finalBeads.length <= 0 || isProcessing}>
+                    {isProcessing ? 'Processing...' : "Submit Design for Pre-Order"}
                 </button>
             </div>
         </div>

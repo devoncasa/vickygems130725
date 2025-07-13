@@ -302,7 +302,7 @@ export const PRODUCTS: Product[] = [
     name: 'Root Amber Pendant with Silver Setting',
     category: 'pendants',
     material: Material.Amber,
-    price: 12000,
+    price: 37300,
     isNewArrival: true,
     story: 'This one-of-a-kind pendant features a stunning piece of Root Amber, known for its wood-like organic patterns. Set in 925 Sterling Silver.',
     energyProperties: ['Grounding', 'Connection to Nature', 'Stability'],
@@ -326,7 +326,7 @@ export const PRODUCTS: Product[] = [
       description: 'Opaque amber with wood-like patterns.',
       rarity: 'Uncommon',
       specialNote: 'Pattern is unique to each piece.',
-      basePricePerGram: 400,
+      basePricePerGram: 1500,
     },
     inventory: {
       stock: 7,
@@ -657,12 +657,12 @@ export const AMBER_COLOR_DETAILS: AmberColorDetail[] = [
     {
         id: 'root',
         name: 'Root Amber (Wood-like Pattern)',
-        priceRange: '฿300 – ฿500 per gram',
+        priceRange: '฿1,500 per gram',
         description: 'An opaque amber with wood-like patterns and textures, created by tree resin mixing with soil and plant debris.',
         rarity: 'Uncommon',
         specialNote: 'Highly prized for its unique organic patterns.',
         imageUrl: 'https://placehold.co/400x300/6B4F3A/FBF9F6?text=Root+Amber',
-        basePricePerGram: 400,
+        basePricePerGram: 1500,
     }
 ];
 
